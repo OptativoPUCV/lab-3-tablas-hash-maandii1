@@ -71,7 +71,7 @@ void enlarge(HashMap * map) {
 HashMap * createMap(long capacity) {
     HashMap * map = (HashMap *)malloc(sizeof(HashMap));
     map->buckets = (Pair **)malloc(sizeof(Pair *) * capacity); //reservamos memoria para los pares
-    map->buckets = NULL;
+   
     map->capacity = capacity; //asignamos la capacidad
     map->size = 0; //inicializamos el tamaño a 0
     map->current = -1; 
