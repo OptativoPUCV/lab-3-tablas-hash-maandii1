@@ -112,7 +112,7 @@ Pair * searchMap(HashMap * map,  char * key) {
 
 Pair * firstMap(HashMap * map) {
     for (int i = 0; i < map->capacity; i++) {
-        if (map->buckets[i] != NULL) { //si la posicion no es NULL, devolvemos el par
+        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) { //si la posicion no es NULL, devolvemos el par
             map->current = i; //guardamos la posicion del par encontrado
             return map->buckets[i];
         }
