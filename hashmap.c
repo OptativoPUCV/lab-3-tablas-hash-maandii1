@@ -42,33 +42,29 @@ int is_equal(void* key1, void* key2){
 void insertMap(HashMap * map, char * key, void * value) {
     long posicion = hash(key, map->capacity);
     long posOriginal = posicion; //guardamos la posicion original para evitar bucles infinitos
-    Pair * nuevo = createPair(key, value);
-    if (map->buckets[posicion] == NULL) { //si no hay nada en esa posicion
-        map->buckets[posicion] = nuevo;
-        map->size++; //aumentamos tamaño
-    } else { //ya existe una lista en esa posicion
-        Pair * current = map->buckets[posicion]; 
-        while (current != NULL) {
-            if (is_equal(current->key, key)) {
-                current->value = value; //actualizamos valor
-                free(nuevo); //ya existe el par, no necesitamos el nuevo
-                return;
-            }
-            posicion = (posicion +1) % map->capacity; //avanzamos circularmente
-            current = map->buckets[posicion]; //avanzamos en la lista
-            if (posicion == posOriginal) { //si volvimos a la posicion original, no hay espacio
-                free(nuevo); //liberamos el nuevo par
-                return;
-            }
+    
+    while (map->buckets[posicion] != NULL) { //si ya hay un par en esa posicion
+        if (map->buckets[posicion]->key != NULL && is_equal(map->buckets[posicion]->key, key)) { //si la llave ya existe
+            //clave duplicada
+            return;
         }
+        if (map->buckets[posicion]->key == NULL) { //si la llave es NULL, significa que el espacio esta libre
+            break; //salimos del bucle para insertar el nuevo par
+        }
+        posicion = (posicion + 1) %map->capacity; //buscamos la siguiente posicion
+        if (posicion == posOriginal) { //si volvimos a la posicion original, significa que la tabla esta llena
+            return;
+        }
+
+        Pair * nuevo = createPair(key, value); //creamos el nuevo par
         map->buckets[posicion] = nuevo;
         map->size++;
+        map->current = posicion;
+    }
 }
 
 void enlarge(HashMap * map) {
     enlarge_called = 1; //no borrar (testing purposes)
-
-
 }
 
 
