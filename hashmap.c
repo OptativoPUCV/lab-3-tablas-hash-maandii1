@@ -87,6 +87,7 @@ void eraseMap(HashMap * map,  char * key) {
         if (is_equal(map->buckets[posicion]->key, key)) { 
             map->buckets[posicion]->key = NULL;
             map->current = posicion; //guardamos la posicion del par encontrado
+            map->size--;
         }
         else {
             posicion = (posicion + 1) % map->capacity; //buscamos la siguiente posicion
