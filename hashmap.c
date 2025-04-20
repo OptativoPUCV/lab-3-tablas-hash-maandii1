@@ -80,14 +80,18 @@ HashMap * createMap(long capacity) {
     return map;
 }
 
-void eraseMap(HashMap * map,  char * key) {    
+void eraseMap(HashMap * map,  char * key) {   
+
 
 
 }
 
 Pair * searchMap(HashMap * map,  char * key) {   
-
-
+    long posicion = hash(key, map->capacity);
+    while (map->buckets[posicion] != NULL) { //si la llave no es igual, seguimos buscando
+        if (is_equal(map->buckets[posicion]->key, key)) return map->buckets[posicion]; //si la llave es igual a la que buscamos, devolvemos el par
+        posicion = (posicion + 1) % map->capacity; //buscamos la siguiente posicion
+    }
     return NULL;
 }
 
