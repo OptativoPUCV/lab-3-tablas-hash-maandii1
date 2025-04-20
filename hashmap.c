@@ -81,9 +81,20 @@ HashMap * createMap(long capacity) {
 }
 
 void eraseMap(HashMap * map,  char * key) {   
-
-
-
+    long posicion = hash(key, map->capacity); //obtenemos la posicion de la llave
+    long posOriginal = posicion; 
+    while (map->buckets[posicion] != NULL) { 
+        if (is_equal(map->buckets[posicion]->key, key)) { 
+            map->buckets[posicion]->key = NULL;
+            map->current = posicion; //guardamos la posicion del par encontrado
+        }
+        else {
+            posicion = (posicion + 1) % map->capacity; //buscamos la siguiente posicion
+            if (posicion == posOriginal) { //si volvimos a la posicion original, significa que no hay mas pares
+                return;
+            }
+        }
+    }
 }
 
 Pair * searchMap(HashMap * map,  char * key) {   
