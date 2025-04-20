@@ -121,6 +121,11 @@ Pair * firstMap(HashMap * map) {
 }
 
 Pair * nextMap(HashMap * map) {
-
+    for(int i = map->current + 1; i < map->capacity; i++) { //partimos desde le siguiente al current
+        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) { 
+            map->current = i; //guardamos la posicion del par encontrado
+            return map->buckets[i];
+        }
+    }
     return NULL;
 }
