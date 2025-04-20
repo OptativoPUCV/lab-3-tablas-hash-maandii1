@@ -56,7 +56,7 @@ void insertMap(HashMap * map, char * key, void * value) {
             return;
         }
 
-        Pair * nuevo = createPair(key, value); //creamos el nuevo par
+        Pair * nuevo = createPair(strdup(key), value); //creamos el nuevo par
         map->buckets[posicion] = nuevo;
         map->size++;
         map->current = posicion;
