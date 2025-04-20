@@ -52,11 +52,11 @@ void insertMap(HashMap * map, char * key, void * value) {
             break; //salimos del bucle para insertar el nuevo par
         }
         posicion = (posicion + 1) %map->capacity; //buscamos la siguiente posicion
-        if (posicion == posOriginal) { //si volvimos a la posicion original, significa que la tabla esta llena
+        if (posicion == posOriginal) { 
             return;
         }
 
-        Pair * nuevo = createPair(strdup(key), value); //creamos el nuevo par
+        Pair * nuevo = createPair(strdup(key), value); 
         map->buckets[posicion] = nuevo;
         map->size++;
         map->current = posicion;
@@ -65,6 +65,16 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 void enlarge(HashMap * map) {
     enlarge_called = 1; //no borrar (testing purposes)
+    Pair ** old_buckets = map->buckets;
+    long old_capacity = map->capacity; 
+    map->capacity *= 2; 
+    map->buckets = (Pair **)malloc(sizeof(Pair *) * map->capacity); //reservamos memoria para los nuevos pares
+    map->size = 0; 
+    for (long i = 0; i < old_capacity; i++) {
+        if (old_buckets[i] != NULL && old_buckets[i]->key != NULL) {
+            insertMap(map, old_buckets[i]->key, old_buckets[i]->value); 
+        }
+    }
 }
 
 
