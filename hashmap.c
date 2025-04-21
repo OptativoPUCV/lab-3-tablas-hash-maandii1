@@ -67,7 +67,7 @@ void enlarge(HashMap * map) {
     Pair ** old_buckets = map->buckets;
     long old_capacity = map->capacity; 
     map->capacity *= 2; 
-    map->buckets = (Pair **)malloc(sizeof(Pair *) * map->capacity); //reservamos memoria para los nuevos pares
+    map->buckets = (Pair **)calloc(map->capacity, sizeof(Pair *)); //reservamos memoria para los nuevos pares
     map->size = 0; 
     for (long i = 0; i < old_capacity; i++) {
         if (old_buckets[i] != NULL && old_buckets[i]->key != NULL) {
