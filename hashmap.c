@@ -55,12 +55,11 @@ void insertMap(HashMap * map, char * key, void * value) {
         if (posicion == posOriginal) { 
             return;
         }
-
-        Pair * nuevo = createPair(strdup(key), value); 
-        map->buckets[posicion] = nuevo;
-        map->size++;
-        map->current = posicion;
     }
+    Pair * nuevo = createPair(strdup(key), value); 
+    map->buckets[posicion] = nuevo;
+    map->size++;
+    map->current = posicion;
 }
 
 void enlarge(HashMap * map) {
